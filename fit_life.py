@@ -1,15 +1,21 @@
-import time  # импорт модуля time для анимации загрузки
+import time
+
+WATER_PER_KG = 30  # Переменная для расчета мл воды на кг веса
+ML_PER_LITER = 1000  # Переменная для расчета мл воды на литр
+Interval_for_loader = 0.1  # Интервал для вывода анимации
 
 # Проект FitLife - MVP версия 1.0
 
 # 1. Знакомство
 print('Здравствуйте, уважаемый пользователь')
 user_name = input('Введите свое имя: ')
+user_name = user_name.title()
 
 # 2. Сбор данных
 while True:  # Проверка на ввод целого числа и адекватный возраст
     try:
         user_age = int(input('Введите свой возраст: '))
+
         if 0 <= user_age <= 100:
             break
         else:
@@ -19,7 +25,9 @@ while True:  # Проверка на ввод целого числа и аде�
 
 while True:  # Проверка на ввод числа с плавающей точной и адекватный вес
     try:
-        user_weight = float(input('Введите свой вес (в кг): '))
+        weight_str = input('Введите свой вес (в кг): ').replace(',', '.')
+        user_weight = float(weight_str)  # разделено на две строки для pep8
+
         if 35. <= user_weight <= 150.:
             break
         else:
@@ -30,7 +38,9 @@ while True:  # Проверка на ввод числа с плавающей �
 
 while True:  # Проверка на ввод числа с точкой и адекватный рост
     try:
-        user_height = float(input('Введите свой рост (в метрах): '))
+        height_str = input('Введите свой рост (в метрах): ').replace(',', '.')
+        user_height = float(height_str)  # разделено на две строки для pep8
+
         if 1. <= user_height <= 2.3:
             break
         else:
@@ -43,7 +53,6 @@ while True:  # Проверка на ввод числа с точкой и ад
 
 
 # 3. Логика расчетов
-WATER_PER_KG = 30  # Переменная для расчета мл воды на кг веса
 
 
 def bmi(weight, height):
@@ -56,22 +65,20 @@ def bmi(weight, height):
 def water_norm(weight, water_per_kg):
     """Вычисляем норму воды функцией"""
     water_ml = weight * water_per_kg
-    ML_PER_LITER = 1000
     water_liter = water_ml / ML_PER_LITER
     print(f'Ваша норма воды в день: {round(water_liter, 2)}')
     return water_liter
 
 
 # 5. Вывод красивого результата
-loading = ['0%', '10%', '20%', '30%', '40%', '50%',
+Loading = ['0%', '10%', '20%', '30%', '40%', '50%',
            '60%', '70%', '80%', '90%', '100%']  # список для анимации загрузки
 
 print('Ваш расчет готовится, подождите.')
 
-for loader in loading:  # цикл для анимации
+for loader in Loading:  # цикл для анимации
     print(loader)
-    time.sleep(0.1)  # Из за pytest сделал анимацию 0.1(хотел 0.5)
-
+    time.sleep(Interval_for_loader)
 print('Ваш расчет готов.')
 
 print('Расчет для пользователя:', user_name, user_age, 'г.')
